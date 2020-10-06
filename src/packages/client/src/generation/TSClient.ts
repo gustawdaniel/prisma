@@ -294,7 +294,7 @@ export class TSClient implements Generatable {
 
 ${this.options.platforms
         ? this.options.platforms
-          .map((p) => `path.join(__dirname, 'query-engine-${p}');`)
+          .map((p) => `path.join(__dirname === '/' ? process.cwd() : __dirname, 'query-engine-${p}');`)
           .join('\n')
         : ''
       }
@@ -302,7 +302,7 @@ ${this.options.platforms
 /**
  * Annotation for \`node-file-trace\`
 **/
-path.join(__dirname, 'schema.prisma');
+path.join(__dirname === '/' ? process.cwd() : __dirname, 'schema.prisma');
 
 /**
  * Enums
@@ -330,7 +330,7 @@ exports.dmmf = JSON.parse(dmmfString)
 
 const config = ${JSON.stringify(config, null, 2)}
 config.document = dmmf
-config.dirname = __dirname
+config.dirname = __dirname === '/' ? process.cwd() : __dirname
 
 const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient`
