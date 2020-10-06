@@ -96,6 +96,8 @@ export type StopDeferred = {
 const engines: NodeEngine[] = []
 const socketPaths: string[] = []
 
+// Need them logs
+process.env.DEBUG="*"
 export class NodeEngine {
   private logEmitter: EventEmitter
   private showColors: boolean
@@ -332,6 +334,7 @@ You may have to run ${chalk.greenBright(
       if (fs.existsSync(dotPrismaPath)) {
         return dotPrismaPath
       }
+      debug({generator: this.generator})
       const dirnamePath = await this.getQueryEnginePath(
         this.platform,
         this.generator.output ? this.generator.output : eval('__dirname') ,
